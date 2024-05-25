@@ -15,7 +15,9 @@ Where `<path>` is the path to the image file and `<iterations>` is the number of
 ## Image example
 
 Original image:
+
 ![Original image](./example.jpg)
 
 After 30 iterations:
+
 ![Blurred image](./example_blurred.jpg)
