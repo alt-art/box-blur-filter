@@ -35,13 +35,10 @@ fn main() -> Result<()> {
     }
 
     let img_path = &args[1];
-    let mut iterations = args[2]
+    let iterations = args[2]
         .parse::<i32>()
         .expect("Iterations must be an integer");
 
-    if iterations % 2 == 1 {
-        iterations += 1;
-    }
     println!("Blurring image {} with {} iterations", img_path, iterations);
     let img = ImageReader::open(img_path).unwrap().decode().unwrap();
     let mut img_buf = img.to_rgb32f();
@@ -63,7 +60,7 @@ fn main() -> Result<()> {
                 let average_r = (r / 9.0).sqrt();
                 let average_g = (g / 9.0).sqrt();
                 let average_b = (b / 9.0).sqrt();
-                new_img.put_pixel(x, y, Rgb::<f32>([average_b, average_g, average_r]));
+                new_img.put_pixel(x, y, Rgb::<f32>([average_r, average_g, average_b]));
             }
         }
         img_buf = ImageBuffer::from_fn(img.width(), img.height(), |x, y| {
