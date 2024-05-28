@@ -29,15 +29,16 @@ fn save_image(img: ImageBuffer<Rgb<f32>, Vec<f32>>, path: &str) -> Result<()> {
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() != 3 {
-        eprintln!("Usage: {} <image_path> <iterations>", args[0]);
+    if args.len() != 4 {
+        eprintln!("Usage: {} <image_path> <iterations> <ratio>", args[0]);
         std::process::exit(1);
     }
 
     let img_path = &args[1];
     let iterations = args[2]
-        .parse::<i32>()
+        .parse::<u32>()
         .expect("Iterations must be an integer");
+    let ratio = args[3].parse::<i32>().expect("Ratio must be an integer");
 
     println!("Blurring image {} with {} iterations", img_path, iterations);
     let img = ImageReader::open(img_path).unwrap().decode().unwrap();
@@ -49,8 +50,8 @@ fn main() -> Result<()> {
                 let mut r = 0.0;
                 let mut g = 0.0;
                 let mut b = 0.0;
-                for i in -1..=1 {
-                    for j in -1..=1 {
+                for i in -ratio..=ratio {
+                    for j in -ratio..=ratio {
                         let pixel = safe_get_pixel(&img_buf, x as i32 + i, y as i32 + j);
                         r += pixel[0] * pixel[0];
                         g += pixel[1] * pixel[1];
