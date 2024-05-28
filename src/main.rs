@@ -29,8 +29,8 @@ fn save_image(img: ImageBuffer<Rgb<f32>, Vec<f32>>, path: &str) -> Result<()> {
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() != 4 {
-        eprintln!("Usage: {} <image_path> <iterations> <ratio>", args[0]);
+    if args.len() < 3 {
+        eprintln!("Usage: {} <image_path> <iterations> [ratio]", args[0]);
         std::process::exit(1);
     }
 
@@ -38,7 +38,10 @@ fn main() -> Result<()> {
     let iterations = args[2]
         .parse::<u32>()
         .expect("Iterations must be an integer");
-    let ratio = args[3].parse::<i32>().expect("Ratio must be an integer");
+    let ratio = args
+        .get(3)
+        .map(|r| r.parse::<i32>().expect("Ratio must be an integer"))
+        .unwrap_or(1);
 
     println!("Blurring image {} with {} iterations", img_path, iterations);
     let img = ImageReader::open(img_path).unwrap().decode().unwrap();
