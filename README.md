@@ -7,10 +7,10 @@ This implementation can replicate the results of the gaussian blur implementatio
 ## Usage
 
 ```
-cargo run -- <path> <iterations>
+cargo run -- <path> <iterations> [ratio]
 ```
 
-Where `<path>` is the path to the image file and `<iterations>` is the number of iterations that the box blur algorithm will run.
+Where `<path>` is the path to the image file and `<iterations>` is the number of iterations that the box blur algorithm will run on the image. The optional `[ratio]` parameter is the ratio of the box blur algorithm. The default value is 1.
 
 ## Image example
 
